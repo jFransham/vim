@@ -58,7 +58,6 @@ set tags=tags;/,codex.tags;/
 " Regular grep integrates poorly with vim by default, so don't check if
 " ripgrep is installed first. Just let it explode
 set grepprg=rg\ --vimgrep
-colorscheme tabula-rasa
 
 " For bundle managers
 filetype off
@@ -170,3 +169,4 @@ Plugin 'yegappan/grep'
 
 call vundle#end()
 filetype plugin indent on
+colorscheme tabula-rasa
