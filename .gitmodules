@@ -1,0 +1,84 @@
+[submodule "Vundle.vim"]
+    path = ./bundle/Vundle.vim
+    url = git@github.com:VundleVim/Vundle.vim
+
+[submodule "Smart-Tabs"]
+    path = ./bundle/Smart-Tabs
+    url = git@github.com:vim-scripts/Smart-Tabs
+
+[submodule "rust.vim"]
+    path = ./bundle/rust.vim
+    url = git@github.com:rust-lang/rust.vim
+
+[submodule "vim-surround"]
+    path = ./bundle/vim-surround
+    url = git@github.com:tpope/vim-surround
+
+[submodule "vim-repeat"]
+    path = ./bundle/vim-repeat
+    url = git@github.com:tpope/vim-repeat
+
+[submodule "molokai"]
+    path = ./bundle/molokai
+    url = git@github.com:tomasr/molokai
+
+[submodule "tabula-rasa"]
+    path = ./bundle/tabula-rasa
+    url = git@github.com:jFransham/tabula-rasa
+
+[submodule "vim-flavored-markdown"]
+    path = ./bundle/vim-flavored-markdown
+    url = git@github.com:jtratner/vim-flavored-markdown
+
+[submodule "rainbow_parentheses.vim"]
+    path = ./bundle/rainbow_parentheses.vim
+    url = git@github.com:kien/rainbow_parentheses.vim
+
+[submodule "vim-mustache-handlebars"]
+    path = ./bundle/vim-mustache-handlebars
+    url = git@github.com:mustache/vim-mustache-handlebars
+
+[submodule "vim-less"]
+    path = ./bundle/vim-less
+    url = git@github.com:groenewege/vim-less
+
+[submodule "rainbow"]
+    path = ./bundle/rainbow
+    url = git@github.com:luochen1990/rainbow
+
+[submodule "MatchTagAlways"]
+    path = ./bundle/MatchTagAlways
+    url = git@github.com:Valloric/MatchTagAlways
+
+[submodule "vim-ruby-heredoc-syntax"]
+    path = ./bundle/vim-ruby-heredoc-syntax
+    url = git@github.com:joker1007/vim-ruby-heredoc-syntax
+
+[submodule "vim-coffee-script"]
+    path = ./bundle/vim-coffee-script
+    url = git@github.com:kchmck/vim-coffee-script
+
+[submodule "vimproc.vim"]
+    path = ./bundle/vimproc.vim
+    url = git@github.com:Shougo/vimproc.vim
+
+[submodule "ghcmod-vim"]
+    path = ./bundle/ghcmod-vim
+    url = git@github.com:eagletmt/ghcmod-vim
+
+[submodule "neco-ghc"]
+    path = ./bundle/neco-ghc
+    url = git@github.com:eagletmt/neco-ghc
+
+[submodule "supertab"]
+    path = ./bundle/supertab
+    url = git@github.com:ervandew/supertab
+
+[submodule "vim-hoogle"]
+    path = ./bundle/vim-hoogle
+    url = git@github.com:Twinside/vim-hoogle
+
+[submodule "grep"]
+    path = ./bundle/grep
+    url = git@github.com:yegappan/grep
+
