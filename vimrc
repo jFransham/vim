@@ -82,10 +82,33 @@ autocmd FileType haskell setlocal iskeyword=a-z,A-Z,_,48-57,39 cscopeprg=hscope
 " Update ctags on file write
 autocmd BufWritePost *.hs silent exec "!codex update>/dev/null&"
 
+function! Strip(inp)
+	return substitute(a:inp, '^\_s*\(.\{-}\)\_s*$', '\1', '')
+endfunction
+
 " Get selection in vimscript. Fucking nuts this isn't built in
 function! FullSelection()
 	return getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]
 endfunction
+
+function! Translate(argstr)
+	let a:args = split(a:argstr)
+	let a:len = len(a:args)
+	let a:target = a:len > 1 ? a:args[1] : a:args[0]
+	let a:source = a:len > 1 ? a:args[0] : "en"
+	let a:sel = FullSelection()
+	let @@ =
+		\ Strip(
+			\ system(
+				\ "trans" . " " .
+				\ "-b" . " " .
+				\ (a:source . ":" . a:target) . " " .
+				\ shellescape(a:sel)
+			\ )
+		\ )
+endfunction
+
+command! -range -nargs=1 Trans :call Translate("<args>")
 
 " Keep backslash available for search-related tasks
 let mapleader=","
@@ -169,4 +192,7 @@ Plugin 'yegappan/grep'
 
 call vundle#end()
 filetype plugin indent on
+
+" This has to be after `call vundle#end()`
 colorscheme tabula-rasa
+" colorscheme molokai
