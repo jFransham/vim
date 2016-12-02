@@ -45,6 +45,7 @@ set spelllang=en_gb
 set fillchars=vert:│
 " Lowercase search = case-insensitive search, uppercase search =
 " case-sensitive search
+set ignorecase
 set smartcase
 " All mouse powers: activate
 set mouse=a
@@ -54,7 +55,7 @@ set undodir=$HOME/.vim/undo
 set undolevels=1000
 set undoreload=10000
 " Use codex-generated tags as well as standard tags
-set tags=tags;/,codex.tags;/
+set tags=tags;/,codex.tags;/,rusty-tags.vi;/
 " Regular grep integrates poorly with vim by default, so don't check if
 " ripgrep is installed first. Just let it explode
 set grepprg=rg\ --vimgrep
@@ -80,7 +81,11 @@ autocmd FileType html,html.*,css,markdown,haskell setlocal
 " Allow primes in <word>s, and use hscope instead of cscope
 autocmd FileType haskell setlocal iskeyword=a-z,A-Z,_,48-57,39 cscopeprg=hscope
 " Update ctags on file write
-autocmd BufWritePost *.hs silent exec "!codex update>/dev/null&"
+autocmd BufWritePost *.hs :silent exec "!(cd " . shellescape(expand('%:p:h'))
+			\ . " && codex update 1>/dev/null 2>/dev/null 3>/dev/null)&"
+autocmd BufWritePost *.rs :silent exec "!rusty-tags vi --start-dir "
+			\ . shellescape(expand('%:p:h'))
+			\ . " 1>/dev/null 2>/dev/null 3>/dev/null&"
 
 function! Strip(inp)
 	return substitute(a:inp, '^\_s*\(.\{-}\)\_s*$', '\1', '')
@@ -89,6 +94,12 @@ endfunction
 " Get selection in vimscript. Fucking nuts this isn't built in
 function! FullSelection()
 	return getline("'<")[getpos("'<")[2]-1:getpos("'>")[2]-1]
+endfunction
+
+function! Search(for)
+	execute "silent! grep! " . shellescape(a:for) . " -t" . &ft
+	execute "cw"
+	execute "redraw!"
 endfunction
 
 function! Translate(argstr)
@@ -106,9 +117,11 @@ function! Translate(argstr)
 				\ shellescape(a:sel)
 			\ )
 		\ )
+	normal! gvp
 endfunction
 
 command! -range -nargs=1 Trans :call Translate("<args>")
+command! -nargs=1 CodeSearch :call Search("<args>")
 
 " Keep backslash available for search-related tasks
 let mapleader=","
@@ -136,7 +149,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-\><C-h> :Hoogle <C-R>=expand("<cword>")<CR><CR>
-nnoremap <C-\><C-\> :grep! "\b<C-R>=expand("<cword>")<CR>\b" -t<C-R>=&ft<CR><CR>:cw<CR>
+nnoremap <C-\><C-\> :silent! grep! "\b<C-R>=expand("<cword>")<CR>\b" -t<C-R>=&ft<CR><CR>:cw<CR><C-L>
 " Open current view as new tab
 nnoremap <Leader>t <C-w>T
 nnoremap <Leader>ht :GhcModType<CR>
@@ -156,7 +169,7 @@ nnoremap <silent> <Leader>/ :noh<CR>
 vnoremap <silent> <Tab> >
 vnoremap <silent> <S-Tab> <
 vnoremap <C-\><C-h> :<C-w>Hoogle <C-R>=FullSelection()<CR><CR>
-vnoremap <C-\><C-\> :<C-w>grep! "<C-R>=FullSelection()<CR>" -t<C-R>=&ft<CR><CR>:cw<CR>
+vnoremap <C-\><C-\> :<C-w>silent! grep! "<C-R>=FullSelection()<CR>" -t<C-R>=&ft<CR><CR>:cw<CR><C-L>
 " Allow C-d and C-u in insert mode
 inoremap <silent> <C-d> <C-\><C-O><C-d>
 inoremap <silent> <C-u> <C-\><C-O><C-u>
